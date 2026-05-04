@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Development Portfolio</title>
+  <style>
+    :root {
+      --bg-dark: #0b1224;
+      --bg-card: #161f35;
+      --border: #2b3a64;
+      --text-main: #eaf1ff;
+      --text-muted: #b7c3e6;
+      --accent: #06B6D4;
+      --accent-grad: linear-gradient(135deg, #7C3AED, #06B6D4);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      background-image: radial-gradient(circle at top right, rgba(6,182,212,0.1), transparent),
+                        radial-gradient(circle at bottom left, rgba(124,58,237,0.1), transparent);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      margin: 0;
+      background: var(--accent-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin: 40px 0 20px;
+      color: var(--accent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      background: rgba(22, 31, 53, 0.8);
+    }
+
+    .card-num {
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 10px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>WEB DEVELOPMENT ASSIGNMENTS</h1>
+    </header>
+
+    <section>
+      <h2>HTML Core</h2>
+      <div class="grid">
+        <a href="assignment1_first_webpage.html" class="card">
+          <span class="card-num">Assignment 01</span>
+          <div class="card-title">First Webpage</div>
+          <p class="card-desc">The basic building blocks. Introduction to document structure and essential tags.</p>
+        </a>
+
+        <a href="Assignment2_static_webpage.html" class="card">
+          <span class="card-num">Assignment 02</span>
+          <div class="card-title">Static Webpage</div>
+          <p class="card-desc">Creating a multi-element layout using standard HTML styling practices.</p>
+        </a>
+
+        <a href="Assignment3_text_formatting.html" class="card">
+          <span class="card-num">Assignment 03</span>
+          <div class="card-title">Text Formatting</div>
+          <p class="card-desc">Exploring typography, emphasis tags, and structured content hierarchy.</p>
+        </a>
+
+        <a href="Assignment4_lists_tags.html" class="card">
+          <span class="card-num">Assignment 04</span>
+          <div class="card-title">Lists & Semantic Tags</div>
+          <p class="card-desc">Implementing ordered, unordered, and description lists with semantic HTML.</p>
+        </a>
+
+        <a href="Assignment5_IMGTags.html" class="card">
+          <span class="card-num">Assignment 05</span>
+          <div class="card-title">Media & Images</div>
+          <p class="card-desc">Integrating visual media using image tags and basic attribute management.</p>
+        </a>
+
+        <a href="assignment6_iFrames.html" class="card">
+          <span class="card-num">Assignment 06</span>
+          <div class="card-title">iFrames</div>
+          <p class="card-desc">Embedding external content and creating windows within a webpage.</p>
+        </a>
+
+        <a href="Assignment7_Hyperlink.html" class="card">
+          <span class="card-num">Assignment 07</span>
+          <div class="card-title">Hyperlinks</div>
+          <p class="card-desc">Connecting the web through internal bookmarks and external navigation.</p>
+        </a>
+
+        <a href="Assignment8_Table.html" class="card">
+          <span class="card-num">Assignment 08</span>
+          <div class="card-title">Data Tables</div>
+          <p class="card-desc">Organizing complex information into structured rows and columns.</p>
+        </a>
+
+        <a href="Assignment9_Forms.html" class="card">
+          <span class="card-num">Assignment 09</span>
+          <div class="card-title">User Forms</div>
+          <p class="card-desc">Creating interactive inputs, labels, and buttons for user data collection.</p>
+        </a>
+
+        <a href="Assignment10_Resume_Webpage.html" class="card">
+          <span class="card-num">Assignment 10</span>
+          <div class="card-title">Resume Project</div>
+          <p class="card-desc">Combining all previous skills into a professional resume layout.</p>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Data Transformation</h2>
+      <div class="grid">
+        <a href="XML_CSS/" class="card">
+          <span class="card-num">Assignment 11</span>
+          <div class="card-title">XML Styling</div>
+          <p class="card-desc">Using CSS to style raw XML data directly in the browser.</p>
+        </a>
+
+        <a href="XML%20transformation%20using%20XSL/" class="card">
+          <span class="card-num">Assignment 12</span>
+          <div class="card-title">XSL Transformation</div>
+          <p class="card-desc">Transforming XML into HTML structure using XSL sheets.</p>
+        </a>
+
+        <a href="XML%20Transformation%20uisng%20XSLT%20and%20conditional%20statement/" class="card">
+          <span class="card-num">Assignment 13</span>
+          <div class="card-title">Advanced XSLT</div>
+          <p class="card-desc">Implementing logic and conditional statements within XML data transformations.</p>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <span>Tahir Patel • Roll no: 54</span>
+      <span>Div: SY-A • Batch: S3</span>
+    </footer>
+  </div>
+
+</body>
+</html>
