@@ -1,0 +1,99 @@
+college {
+    display: block;
+    font-family: Arial, sans-serif;
+    background: #f3f8ff;
+    padding: 16px;
+}
+
+college > name {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0a3d7a;
+    margin-bottom: 6px;
+}
+
+location, university {
+    display: block;
+    color: #234;
+    margin-bottom: 4px;
+}
+
+departments {
+    display: block;
+    margin-top: 12px;
+}
+
+department {
+    display: block;
+    border: 2px solid #2f6fb2;
+    background: #ffffff;
+    margin: 12px 0;
+    padding: 10px;
+}
+
+department > name {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0b4f95;
+}
+
+hod {
+    display: block;
+    color: #444;
+    margin: 6px 0;
+}
+
+students {
+    display: block;
+}
+
+student {
+    display: block;
+    border: 1px dashed #7aa6d8;
+    background: #f9fcff;
+    padding: 8px;
+    margin: 8px 0;
+}
+
+student > name, year, semester, email {
+    display: block;
+    margin: 2px 0;
+}
+
+subjects {
+    display: block;
+    margin-top: 6px;
+    padding-left: 12px;
+}
+
+subject {
+    display: list-item;
+    list-style-type: square;
+    color: #1f3f63;
+}
+
+courses {
+    display: block;
+    margin-top: 14px;
+}
+
+course {
+    display: block;
+    border-left: 4px solid #2f6fb2;
+    background: #eef5ff;
+    padding: 8px;
+    margin: 8px 0;
+}
+
+title {
+    display: block;
+    font-weight: bold;
+    color: #0d3f78;
+}
+
+description {
+    display: block;
+    color: #2b2b2b;
+}
