@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experiment 13 - XSLT (Student Results)</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:24px;background:#0b1224;color:#eaf1ff}
+    .box{max-width:920px;margin:0 auto;border:1px solid #2b3a64;border-radius:12px;padding:16px;background:#161f35}
+    h1{font-size:20px;margin:0 0 12px}
+    .meta{color:#b7c3e6;font-size:13px;margin:0 0 16px}
+    pre{white-space:pre-wrap;word-break:break-word;background:#0f1b3a;border:1px solid #2b3a64;padding:12px;border-radius:12px;margin-top:12px}
+    #status{margin:10px 0;color:#b7c3e6;font-size:13px}
+    .err{color:#ffb4b4}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Experiment 13 (Assignment 13) — XML → HTML via XSLT</h1>
+    <p class="meta">
+      This page embeds <code>index.xml</code> and <code>style.xsl</code> directly (no <code><?xml-stylesheet?></code>) to avoid
+      <code>file://</code> issues.
+    </p>
+    <div id="status">Preparing…</div>
+    <div id="out"></div>
+  </div>
+
+  <script>
+    const XML_TEXT = `<?xml version="1.0" encoding="UTF-8"?>
+<students>
+    <student>
+        <name>Tahir Patel</name>
+        <roll>101</roll>
+        <marks>97</marks>
+    </student>
+    <student>
+        <name>John Smith</name>
+        <roll>102</roll>
+        <marks>45</marks>
+    </student>
+    <student>
+        <name>Jane Doe</name>
+        <roll>103</roll>
+        <marks>78</marks>
+    </student>
+    <student>
+        <name>Bob Wilson</name>
+        <roll>104</roll>
+        <marks>32</marks>
+    </student>
+</students>`;
+
+    const XSL_TEXT = `<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="html" encoding="UTF-8" indent="yes"/>
+
+<xsl:template match="/">
+  <html>
+    <head>
+      <title>Experiment 13 - Student Results</title>
+      <style>
+        body { font-family: Arial, sans-serif; background: #ffffff; color: #111; padding: 16px; }
+        table { border-collapse: collapse; width: 70%; }
+        th, td { border: 1px solid #777; padding: 8px; }
+        th { background: #2f855a; color: #fff; }
+        .pass { color: #0a7a33; font-weight: bold; }
+        .fail { color: #c81e1e; font-weight: bold; }
+      </style>
+    </head>
+    <body>
+      <h2>Student Results</h2>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Roll No</th>
+          <th>Marks</th>
+          <th>Status</th>
+        </tr>
+        <xsl:for-each select="students/student">
+          <tr>
+            <td><xsl:value-of select="name"/></td>
+            <td><xsl:value-of select="roll"/></td>
+            <td><xsl:value-of select="marks"/></td>
+            <td>
+              <xsl:choose>
+                <xsl:when test="marks >= 40"><span class="pass">PASS</span></xsl:when>
+                <xsl:otherwise><span class="fail">FAIL</span></xsl:otherwise>
+              </xsl:choose>
+            </td>
+          </tr>
+        </xsl:for-each>
+      </table>
+    </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>`;
+
+    function parseXml(text){
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, "application/xml");
+      const parseError = doc.getElementsByTagName("parsererror")[0];
+      if (parseError) throw new Error("Failed to parse XML/XSL.");
+      return doc;
+    }
+
+    (function run(){
+      const status = document.getElementById("status");
+      const out = document.getElementById("out");
+
+      try{
+        status.textContent = "Transforming…";
+
+        const xmlDoc = parseXml(XML_TEXT);
+        const xslDoc = parseXml(XSL_TEXT);
+
+        const processor = new XSLTProcessor();
+        processor.importStylesheet(xslDoc);
+
+        const resultDoc = processor.transformToDocument(xmlDoc);
+        const serializer = new XMLSerializer();
+        const htmlString = serializer.serializeToString(resultDoc);
+
+        out.innerHTML = "<pre>" + htmlString + "</pre>";
+        status.textContent = "Done.";
+      }catch(e){
+        status.innerHTML = "Error: <span class='err'>" + (e && e.message ? e.message : String(e)) + "</span>";
+        out.innerHTML = "";
+      }
+    })();
+  </script>
+</body>
+</html>

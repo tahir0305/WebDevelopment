@@ -1,5 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="./cat2.xsl" ?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experimentno12 - XSLT Transformation</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:24px;background:#0b1224;color:#eaf1ff}
+    .box{max-width:920px;margin:0 auto;border:1px solid #2b3a64;border-radius:12px;padding:16px;background:#161f35}
+    h1{font-size:20px;margin:0 0 12px}
+    .meta{color:#b7c3e6;font-size:13px;margin:0 0 16px}
+    pre{white-space:pre-wrap;word-break:break-word;background:#0f1b3a;border:1px solid #2b3a64;padding:12px;border-radius:12px;margin-top:12px}
+    #status{margin:10px 0;color:#b7c3e6;font-size:13px}
+    .err{color:#ffb4b4}
+    code{color:#cfe9ff}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Experimentno12 (Assignment 12) — XML → HTML via XSLT</h1>
+    <p class="meta">
+      This page embeds <code>cat.xml</code> and <code>cat2.xsl</code> directly (no fetch), to avoid issues on <code>file://</code>.
+    </p>
+    <div id="status">Preparing…</div>
+    <div id="out"></div>
+  </div>
+
+  <script>
+    const XML_TEXT = `<?xml version="1.0" encoding="UTF-8"?>
 <catalog>
   <cd>
     <title>Empire Burlesque</title>
@@ -147,7 +174,7 @@
   </cd>
   <cd>
     <title>Bridge of Spies</title>
-    <artist>T`Pau</artist>
+    <artist>T\`Pau</artist>
     <country>UK</country>
     <company>Siren</company>
     <price>7.90</price>
@@ -209,4 +236,85 @@
     <price>8.20</price>
     <year>1987</year>
   </cd>
-</catalog>
+</catalog>`;
+
+    const XSL_TEXT = `<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="html" encoding="UTF-8" indent="yes"/>
+
+<xsl:template match="/">
+  <html>
+    <head>
+      <title>Experiment 12 - CD Catalog</title>
+      <style>
+        body { font-family: Arial, sans-serif; background: #ffffff; color: #111; padding: 16px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #666; padding: 8px; text-align: left; }
+        th { background: #e8eefc; }
+      </style>
+    </head>
+    <body>
+      <h2>My CD Collection</h2>
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Artist</th>
+          <th>Country</th>
+          <th>Company</th>
+          <th>Price</th>
+          <th>Year</th>
+        </tr>
+        <xsl:for-each select="catalog/cd">
+          <tr>
+            <td><xsl:value-of select="title"/></td>
+            <td><xsl:value-of select="artist"/></td>
+            <td><xsl:value-of select="country"/></td>
+            <td><xsl:value-of select="company"/></td>
+            <td><xsl:value-of select="price"/></td>
+            <td><xsl:value-of select="year"/></td>
+          </tr>
+        </xsl:for-each>
+      </table>
+    </body>
+  </html>
+</xsl:template>
+
+</xsl:stylesheet>`;
+
+    function parseXml(text){
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, "application/xml");
+      const parseError = doc.getElementsByTagName("parsererror")[0];
+      if (parseError) throw new Error("Failed to parse XML/XSL.");
+      return doc;
+    }
+
+    (function run(){
+      const status = document.getElementById("status");
+      const out = document.getElementById("out");
+
+      try{
+        status.textContent = "Transforming…";
+
+        const xmlDoc = parseXml(XML_TEXT);
+        const xslDoc = parseXml(XSL_TEXT);
+
+        const processor = new XSLTProcessor();
+        processor.importStylesheet(xslDoc);
+
+        const resultDoc = processor.transformToDocument(xmlDoc);
+
+        const serializer = new XMLSerializer();
+        const htmlString = serializer.serializeToString(resultDoc);
+
+        // Show result safely as text (no escaping bugs, no innerHTML issues)
+        out.innerHTML = "<pre>" + htmlString + "</pre>";
+        status.textContent = "Done.";
+      }catch(e){
+        status.innerHTML = "Error: <span class='err'>" + (e && e.message ? e.message : String(e)) + "</span>";
+        out.innerHTML = "";
+      }
+    })();
+  </script>
+</body>
+</html>
